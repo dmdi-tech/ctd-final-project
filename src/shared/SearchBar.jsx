@@ -13,13 +13,17 @@ const StyledLabel = styled.label`
     gap: 5px;
 `;
 
-function SearchBar({ queryString, setQueryString }){
-    const [localQueryString, setLocalQueryString] = useState(queryString);
-
-    
 const preventDefault = (event) => {
     event.preventDefault();
 };
+
+function SearchBar({ queryString, setQueryString }){
+    const [localQueryString, setLocalQueryString] = useState(queryString);
+
+    useEffect(() => {
+        const debounce = setTimeout(() => setQueryString(localQueryString), 500);
+        return () => clearTimeout(debounce);
+    },[localQueryString, setQueryString]);
 
     return(
         <StyledForm onSubmit={preventDefault}>

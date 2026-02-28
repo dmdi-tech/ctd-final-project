@@ -3,9 +3,10 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import styles from './App.module.css';
-import Player from './features/Player'
+import Player from './shared/Player'
 import SearchBar from './shared/SearchBar';
 import { fetchSongs } from './api/itunes';
+import SearchResults from './features/SearchResults';
 
 
 function App() {
@@ -13,8 +14,12 @@ function App() {
   const [songsResults, setSongsResults] = useState([]);
 
   useEffect(() => {
-    async function loadSongs() {
-      if (queryString.length === 0) return; 
+    const loadSongs = async () => {
+      
+      if (!queryString.trim()) {
+        setSongsResults([]);
+        return;
+      }; 
 
       try {
         const results = await fetchSongs(queryString);
@@ -34,13 +39,9 @@ function App() {
         setQueryString={setQueryString}
       />
 
-      <div>
-        {songsResults.map((song) => (
-          <div key={song.trackId}>
-            <p>{song.artistName} - {song.trackName}</p>
-          </div>
-        ))}
-      </div>
+      <SearchResults 
+        results={songsResults}
+      />      
     </div>
   )
 }
