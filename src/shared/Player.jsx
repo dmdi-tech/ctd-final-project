@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 import mediaPlayer from '../assets/mediaplayer2.svg';
+import styles from '../shared/Player.module.css';
 
 const PlayerWrapper = styled.div`
     position: relative;
-    width:fit-content;
+    width:100%;
     margin: 0 auto;
 `;
 
 const MediaPlayer = styled.img`
     display: block;
-    width: 90rem;
-    max-width: 900px;
+    width: 100%;
+    height: auto;
     position: relative;
     z-index: 1;
 `;
@@ -51,6 +52,7 @@ const ScreenOverlay = styled.div`
 
 function Player() {
     return (
+        <div className={styles.player}>
         <PlayerWrapper>
             <MediaPlayer src={mediaPlayer} alt="Media Player"/>
             
@@ -59,6 +61,7 @@ function Player() {
 
             </ScreenOverlay>
         </PlayerWrapper>
+        </div>
     )
 }
 

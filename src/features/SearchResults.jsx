@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-
-const StyledContainer = styled.div`
+import styles from './SearchResults.module.css'
+const StyledContainer = styled.div` 
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -8,13 +8,15 @@ const StyledContainer = styled.div`
 
 const StyledDiv = styled.div`
     display: flex;
-    justify-content: flex-start;
     align-items: center;
     gap: 10px;
+    padding: 8px;
+    background: #f9f9f9;
+    border-radius: 6px;
 `;
 
-const StyledSongNames = styled.div`
-    width: 40%;
+const StyledResults = styled.div`
+
 `;
 
 function SearchResults({ results, onPlay, onLike }) {
@@ -29,19 +31,22 @@ function SearchResults({ results, onPlay, onLike }) {
                     height={50}
                 />
                 
-                <StyledSongNames>
+                <StyledResults>
                     <p>{song.artistName} - {song.trackName}</p>
-                </StyledSongNames>
+                    
+                    <div className={styles.buttons}>
+                        <button>
+                        Add to Likes
+                        </button>
+
+                        <button>
+                            Play
+                        </button>
+                    </div>
+                </StyledResults>
 
                 {/* then here add like, favorite, or play wip */}
 
-                <button>
-                    Add to Likes
-                </button>
-
-                <button>
-                    Play
-                </button>
             </StyledDiv>
             ))}
       </StyledContainer>

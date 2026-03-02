@@ -5,9 +5,35 @@
 }
 
 .container {
+    position: relative;
     width: 100%;
     max-width: 1000px;
     margin: 0 auto;
+}
+
+.searchArea {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    margin: 0 auto;
+    background: white; 
+    border: 1px solid #ccc; 
+    padding: 10px; 
+    z-index: 10;
+    max-height: 300px; 
+    overflow-y: auto; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+}
+
+.searchArea > div:last-child {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.searchArea {
+    width: min(500px, 95%);
 }
 
 .error {

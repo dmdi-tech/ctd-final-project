@@ -34,7 +34,6 @@ function SearchBar({ queryString, setQueryString }){
                     value={localQueryString}
                     onChange={(event) => {
                         setLocalQueryString(event.target.value);
-                        setQueryString(event.target.value);
                     }}
                 />  
             </StyledLabel>

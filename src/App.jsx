@@ -9,13 +9,14 @@ import { fetchSongs } from './api/itunes';
 import SearchResults from './features/SearchResults';
 
 
+
 function App() {
   const [queryString, setQueryString] = useState('');
   const [songsResults, setSongsResults] = useState([]);
 
   useEffect(() => {
     const loadSongs = async () => {
-      
+
       if (!queryString.trim()) {
         setSongsResults([]);
         return;
@@ -33,15 +34,18 @@ function App() {
 
   return (
     <div className={styles.container}>
-      <Player />
-      <SearchBar 
-        queryString={queryString}
-        setQueryString={setQueryString}
-      />
+      <div className={styles.searchArea}>
+        <SearchBar 
+          queryString={queryString}
+          setQueryString={setQueryString}
+        />
 
-      <SearchResults 
-        results={songsResults}
-      />      
+        <SearchResults 
+          results={songsResults}
+        />  
+      </div>   
+      
+      <Player /> 
     </div>
   )
 }
