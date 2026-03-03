@@ -24,6 +24,12 @@ function LikedList({ likedList, isLoading }) {
             
             {likedList.map((song) => (
                 <div key={song.trackId}>
+                    <img 
+                    src={song.artworkUrl100}
+                    alt={`${song.trackName}`}
+                    width={50}
+                    height={50}
+                />
                     <p>{song.artistName} - {song.trackName}</p>
                 </div>
             ))}
