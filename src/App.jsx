@@ -13,12 +13,17 @@ import SearchResults from './features/SearchResults';
 function App() {
   const [queryString, setQueryString] = useState('');
   const [songsResults, setSongsResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const loadSongs = async () => {
-
+      setIsLoading(true);
+      
       if (!queryString.trim()) {
         setSongsResults([]);
+        setIsLoading(false);
         return;
       }; 
 
@@ -27,6 +32,8 @@ function App() {
         setSongsResults(results);
       } catch (error) {
         console.error("Error");
+      } finally {
+        setIsLoading(false);
       }
     }
     loadSongs();
@@ -42,6 +49,7 @@ function App() {
 
         <SearchResults 
           results={songsResults}
+          isLoading={isLoading}
         />  
       </div>   
       

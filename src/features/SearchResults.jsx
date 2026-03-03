@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import styles from './SearchResults.module.css'
+import { useState, useEffect } from 'react';
+
+
 const StyledContainer = styled.div` 
     display: flex;
     flex-direction: column;
@@ -19,7 +22,12 @@ const StyledResults = styled.div`
 
 `;
 
-function SearchResults({ results, onPlay, onLike }) {
+function SearchResults({ results, onPlay, onLike, isLoading }) {
+
+    if(isLoading) {
+        return <p>Loading...</p>
+    }
+
     return (
         <StyledContainer>
             {results.map((song) => (
