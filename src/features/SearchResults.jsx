@@ -43,7 +43,11 @@ function SearchResults({ results, onPlay, onLike, isLoading }) {
                     <p>{song.artistName} - {song.trackName}</p>
                     
                     <div className={styles.buttons}>
-                        <button>
+                        <button
+                            onClick={() => {
+                                onLike(song)
+                            }}
+                        >
                         Add to Likes
                         </button>
 
