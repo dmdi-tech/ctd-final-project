@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import styles from './SearchResults.module.css'
 import { useState, useEffect } from 'react';
+import PlaySong from './PlaySong';
 
 
 const StyledContainer = styled.div` 
@@ -10,7 +11,7 @@ const StyledContainer = styled.div`
 `;
 
 
-function LikedList({ likedList, isLoading }) {
+function LikedList({ likedList, onPlay, isLoading }) {
 
     if(isLoading) {
         return <p>Liked List is loading...</p>
@@ -31,7 +32,13 @@ function LikedList({ likedList, isLoading }) {
                     height={50}
                 />
                     <p>{song.artistName} - {song.trackName}</p>
+                    
+                    <PlaySong 
+                        song={song} 
+                        onPlay={onPlay}
+                    />
                 </div>
+                
             ))}
 
         </StyledContainer>

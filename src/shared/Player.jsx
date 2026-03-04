@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import mediaPlayer from '../assets/mediaplayer2.svg';
 import styles from '../shared/Player.module.css';
+import { useEffect, useRef, useState } from 'react';
 
 const PlayerWrapper = styled.div`
     position: relative;
@@ -32,8 +33,6 @@ const ScreenOverlay = styled.div`
     font-family: 'VT323', monospace;
     letter-spacing: 2px;
 
-    color: #00eaff;
-
     background: linear-gradient(to bottom, #001a20, #000e12);
     border-radius: 4px;
 
@@ -41,16 +40,32 @@ const ScreenOverlay = styled.div`
         inset 0 0 8px #00eaff55,
         0 0 12px #00eaff33;
 
-    text-shadow:
-        0 0 4px #00eaff,
-        0 0 8px #00eaff;
 
     pointer-events: none;
 `;
 
+const PlayingSong = styled.p`
+    display: flex;
+    flex-direction: row;
+    font-size: 25px;
+    font-style: italic;
+    color: #00eaff;
+    text-shadow:
+        0 0 4px #00eaff,
+        0 0 8px #00eaff;
+`;
 
 
-function Player() {
+function Player({ currentSong }) {
+    const audioRef = useRef(null);
+
+    useEffect(() => {
+        if(currentSong && audioRef.current) {
+            audioRef.current.src = currentSong.previewUrl;
+            audioRef.current.play();
+        }
+    }, [currentSong]);
+
     return (
         <div className={styles.player}>
         <PlayerWrapper>
@@ -58,6 +73,16 @@ function Player() {
             
             <ScreenOverlay>
                 <p>MP3</p>
+                {currentSong ? (
+                    <> 
+                        <PlayingSong>
+                            {currentSong.trackName}
+                        </PlayingSong>
+                    </>
+                ) : (
+                    <p>No song playing...</p>
+                )}
+                <audio ref={audioRef} />
 
             </ScreenOverlay>
         </PlayerWrapper>

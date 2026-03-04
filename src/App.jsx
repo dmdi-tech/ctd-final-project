@@ -15,12 +15,17 @@ function App() {
   const [queryString, setQueryString] = useState('');
   const [songsResults, setSongsResults] = useState([]);
   const [likedList, setLikedList] = useState([]);
+  const [currentSong, setCurrentSong] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
   const addSong = (song) => {
     setLikedList([...likedList, song]);
+  };
+
+  const handlePlaySong = (song) => {
+    setCurrentSong(song);
   };
 
 
@@ -58,13 +63,17 @@ function App() {
           results={songsResults}
           isLoading={isLoading}
           onLike={addSong}
+          onPlay={handlePlaySong}
         />  
       </div>   
       
-      <Player /> 
+      <Player 
+        currentSong={currentSong}
+      /> 
 
       <LikedList 
         likedList={likedList}
+        onPlay={handlePlaySong}
       />
 
       {errorMessage && (

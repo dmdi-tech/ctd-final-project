@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import styles from './SearchResults.module.css'
+import PlaySong from './PlaySong';
 import { useState, useEffect } from 'react';
 
 
@@ -23,6 +24,7 @@ const StyledResults = styled.div`
 `;
 
 function SearchResults({ results, onPlay, onLike, isLoading }) {
+
 
     if(isLoading) {
         return <p>Loading...</p>
@@ -51,9 +53,10 @@ function SearchResults({ results, onPlay, onLike, isLoading }) {
                         Add to Likes
                         </button>
 
-                        <button>
-                            Play
-                        </button>
+                        <PlaySong 
+                            song={song} 
+                            onPlay={onPlay}
+                        />
                     </div>
                 </StyledResults>
 

@@ -13,10 +13,10 @@
 
 .searchArea {
     position: absolute;
-    top: 40px;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
-    width: 50%;
+    width: 40%;
     margin: 0 auto;
     background: white; 
     border: 1px solid #ccc; 
@@ -33,7 +33,7 @@
 }
 
 .searchArea {
-    width: min(500px, 95%);
+    width: min(900px, 75%);
 }
 
 .error {
