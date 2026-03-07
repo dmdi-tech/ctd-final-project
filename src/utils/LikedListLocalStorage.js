@@ -21,7 +21,7 @@ function saveList(list) {
 
 function addSongToFavorites(item) {
     const songId = item.trackId ?? item.id;
-    const list = getList().filter(favSong => favSong.id !== songId);
+    const list = getList().filter(favSong => (favSong.trackId ?? favSong.id) !== songId);
     saveList([
         ...list,
         {...item, isFavorite: true},
@@ -29,7 +29,8 @@ function addSongToFavorites(item) {
 };
 
 function removeSong(songId) {
-    saveList(getList().filter((favSong => favSong.id !== songId)));
+    const list = (getList().filter((favSong => (favSong.trackId ?? favSong.id)!== songId)));
+    saveList(list);
 };
 
 export default { getList, saveList, addSongToFavorites, removeSong };

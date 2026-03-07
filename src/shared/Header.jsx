@@ -11,56 +11,57 @@ function Header() {
             <h2>Music Player</h2>
             <div className={styles.navLinks}>
                 <nav>
-                <NavLink
-                    to={"/"}
-                    className={({ isActive })=>{
-                        if(isActive==true){
-                            return styles.active;
-                        } else {
-                            return styles.inactive;
-                        }
-                    }}
-                >
-                    Home
-                </NavLink>
-                <NavLink
-                    to={"/about"}
-                    className={({ isActive })=>{
-                        if(isActive==true){
-                            return styles.active;
-                        } else {
-                            return styles.inactive;
-                        }
-                    }}
-                >
-                    About
-                </NavLink>
+                    <NavLink
+                        to={"/"}
+                        className={({ isActive })=>{
+                            if(isActive==true){
+                                return styles.active;
+                            } else {
+                                return styles.inactive;
+                            }
+                        }}
+                    >
+                        Home
+                    </NavLink>
+                    
+                    <NavLink
+                        to={"/about"}
+                        className={({ isActive })=>{
+                            if(isActive==true){
+                                return styles.active;
+                            } else {
+                                return styles.inactive;
+                            }
+                        }}
+                    >
+                        About
+                    </NavLink>
 
-                <NavLink
-                    to={"/search"}
-                    className={({ isActive })=>{
-                        if(isActive==true){
-                            return styles.active;
-                        } else {
-                            return styles.inactive;
-                        }
-                    }}
-                >
-                    Search
-                </NavLink>
+                    <NavLink
+                        to={"/search"}
+                        className={({ isActive })=>{
+                            if(isActive==true){
+                                return styles.active;
+                            } else {
+                                return styles.inactive;
+                            }
+                        }}
+                    >
+                        Search
+                    </NavLink>
 
-                <NavLink
-                    to={"/likedlist"}
-                    className={({ isActive })=>{
-                        if(isActive==true){
-                            return styles.active;
-                        } else {
-                            return styles.inactive;
-                        }
-                    }}
-                >
-                    Liked List
-                </NavLink>
+                    <NavLink
+                        to={"/likedlist"}
+                        className={({ isActive })=>{
+                            if(isActive==true){
+                                return styles.active;
+                            } else {
+                                return styles.inactive;
+                            }
+                        }}
+                    >
+                        Liked List
+                    </NavLink>
                 </nav>
             </div>
         </div>

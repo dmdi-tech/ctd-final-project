@@ -1,8 +1,3 @@
-{/* this is where favorite and remove button go*/}
-import { useContext, useState } from "react";
-
-import favoritesLocalStorage from "../utils/LikedListLocalStorage";
-
 function LikedSong({ song, onFavorite, onRemove }) {
 
     return (
@@ -10,7 +5,7 @@ function LikedSong({ song, onFavorite, onRemove }) {
             <button 
                 onClick={() => onFavorite(song)}
             >
-                Favorite
+                { song.isFavorite ? "❤" : "♡" } 
             </button>
 
             <button 

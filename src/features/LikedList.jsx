@@ -13,22 +13,12 @@ const StyledContainer = styled.div`
 
 
 function LikedList({ }) {
-    const [queryString, setQueryString] = useState('');
-    const [songsResults, setSongsResults] = useState([]);
     const [likedList, setLikedList] = useState(() => likedListLocalStorage.getList());
     const [currentSong, setCurrentSong] = useState(null);
+
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isSaving, setIsSaving] = useState(false);
-    const [onPlay, setOnPlay] = useState(false);
-
-    if(isLoading) {
-        return <p>Liked List is loading...</p>
-    }
-
-    if (!likedList || likedList.length === 0) {
-        return <p>No liked songs yet. Add a song your liked list!</p>;
-    }
 
     const addSong = (song) => {
         setLikedList(prev => [...prev, song]);
@@ -40,19 +30,46 @@ function LikedList({ }) {
 
     const handleFavoriteSong = (song) => {
         setLikedList(prev => {
-        
-        })
-    }
+            const songId = song.trackId ?? song.id;
+
+            const filtered = prev.filter(s => s.trackId !== songId);
+
+            const updatedFav = [
+                ...filtered,
+                {...song, isFavorite: !song.isFavorite}
+            ];
+
+            likedListLocalStorage.saveList(updatedFav);
+            return updatedFav;
+        });
+    };
 
     const handleRemoveSong = (song) => {
-
-    }
+        setLikedList(prev => prev.filter(s => s.trackId !== song.trackId));
+        likedListLocalStorage.removeSong(song.trackId);
+    };
 
     useEffect(() => {
-        if(!Array.isArray(likedList)) return;
-        likedListLocalStorage.saveList(likedList);
+        setIsLoading(true);
+        try {
+            if(!Array.isArray(likedList)) {
+                likedListLocalStorage.saveList(likedList);
+            }
+        } catch(errorMessage) {
+            setErrorMessage("Failed to save song to liked list.");
+        } finally {
+            setIsLoading(false);
+        }
+
     }, [likedList]);
 
+    if(isLoading) {
+        return <p>Liked List is loading...</p>
+    }
+
+    if (!likedList || likedList.length === 0) {
+        return <p>No liked songs yet. Add a song your liked list!</p>;
+    }
 
     return (
         <StyledContainer>
@@ -69,14 +86,17 @@ function LikedList({ }) {
                     
                     <PlaySong 
                         song={song} 
-                        onPlay={onPlay}
+                        onPlay={handlePlaySong}
                     />
-                    <LikedSong />
+                    <LikedSong 
+                        song={song}
+                        onFavorite={handleFavoriteSong}
+                        onRemove={handleRemoveSong}
+                    />
 
                 </div>
                 
             ))}
-
         </StyledContainer>
     )
 }

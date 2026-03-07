@@ -9,6 +9,7 @@ import SearchResults from './features/SearchResults';
 import LikedList from './features/LikedList';
 import Header from './shared/Header';
 import About from './pages/About';
+import NotFound from './pages/NotFound';
 import likedListLocalStorage from './utils/LikedListLocalStorage';
 
 function App() {
@@ -71,25 +72,17 @@ function App() {
       <Header />
       <Routes>
           <Route 
-            path='/'
+            path='/' 
             element={
-              <div className={styles.searchArea}>
-                
-              </div>
-            }
+              <>
+              </>
+            }  
           />
 
           <Route 
             path='/search'
             element={
-              <>
-                <SearchResults 
-                  /* results={songsResults}
-                  isLoading={isLoading}
-                  onLike={addSong}*/
-                  onPlay={setCurrentSong}
-                />  
-              </>
+              <SearchResults onPlay={setCurrentSong} />  
             }
           />
 
@@ -100,14 +93,16 @@ function App() {
 
           <Route 
             path='/likedlist'
-            element={<LikedList 
-          />}
-        />
+            element={<LikedList />}
+          />
+
+          <Route 
+            path='*'
+            element= {<NotFound />}
+          />
       </Routes>
 
-      <Player 
-        currentSong={currentSong}
-      /> 
+      <Player currentSong={currentSong} /> 
       
       {/* {errorMessage && (
         <div>
