@@ -55,10 +55,28 @@ function App() {
     <div className={styles.container}>
       <Header />
       <Routes>
-        {/*<Route 
+        <Route 
           path='/'
-          
-        />*/}
+          element={
+            <div className={styles.searchArea}>
+              <SearchBar 
+                queryString={queryString}
+                setQueryString={setQueryString}
+              />
+
+              <SearchResults 
+                results={songsResults}
+                isLoading={isLoading}
+                onLike={addSong}
+                onPlay={handlePlaySong}
+              />  
+            
+              <Player 
+                currentSong={currentSong}
+              /> 
+            </div>
+          }
+        />
         <Route 
           path='/about'
           element={<About />}
@@ -73,24 +91,6 @@ function App() {
           />}
         />
       </Routes>
-
-      <div className={styles.searchArea}>
-        <SearchBar 
-          queryString={queryString}
-          setQueryString={setQueryString}
-        />
-
-        <SearchResults 
-          results={songsResults}
-          isLoading={isLoading}
-          onLike={addSong}
-          onPlay={handlePlaySong}
-        />  
-      </div>   
-      
-      <Player 
-        currentSong={currentSong}
-      /> 
 
       {errorMessage && (
         <div>
