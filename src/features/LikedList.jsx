@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import styles from './SearchResults.module.css'
 import { useState, useEffect } from 'react';
-import PlaySong from './PlaySong';
+import PlaySong from '../shared/PlaySong';
 
 
 const StyledContainer = styled.div` 
@@ -17,12 +17,13 @@ function LikedList({ likedList, onPlay, isLoading }) {
         return <p>Liked List is loading...</p>
     }
 
-    if (likedList.length === 0) return <p>No liked songs yet</p>;
+    if (!likedList || likedList.length === 0) {
+        return <p>No liked songs yet. Add a song your liked list!</p>;
+    }
 
     return (
         <StyledContainer>
-            <h3>Liked List:</h3>
-            
+            <h3>Liked List:</h3>      
             {likedList.map((song) => (
                 <div key={song.trackId}>
                     <img 
@@ -40,7 +41,6 @@ function LikedList({ likedList, onPlay, isLoading }) {
                 </div>
                 
             ))}
-
         </StyledContainer>
     )
 }

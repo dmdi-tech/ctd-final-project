@@ -9,7 +9,6 @@ body {
 #root {
     color: #484848;
     font-family: "MS ui gothic", serif;
-    height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;

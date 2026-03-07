@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { use, useEffect, useState } from 'react'
+import { Routes, Route } from 'react-router';
 import './App.css'
 import styles from './App.module.css';
 import Player from './shared/Player'
@@ -8,7 +7,8 @@ import SearchBar from './shared/SearchBar';
 import { fetchSongs } from './api/itunes';
 import SearchResults from './features/SearchResults';
 import LikedList from './features/LikedList';
-
+import Header from './shared/Header';
+import About from './pages/About';
 
 
 function App() {
@@ -53,6 +53,27 @@ function App() {
 
   return (
     <div className={styles.container}>
+      <Header />
+      <Routes>
+        {/*<Route 
+          path='/'
+          
+        />*/}
+        <Route 
+          path='/about'
+          element={<About />}
+        />
+
+        <Route 
+          path='/likedlist'
+          element={<LikedList 
+            likedList={likedList}
+            onPlay={handlePlaySong}
+            isLoading={isLoading}
+          />}
+        />
+      </Routes>
+
       <div className={styles.searchArea}>
         <SearchBar 
           queryString={queryString}
@@ -70,11 +91,6 @@ function App() {
       <Player 
         currentSong={currentSong}
       /> 
-
-      <LikedList 
-        likedList={likedList}
-        onPlay={handlePlaySong}
-      />
 
       {errorMessage && (
         <div>

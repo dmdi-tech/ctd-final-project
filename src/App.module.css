@@ -7,13 +7,12 @@
 .container {
     position: relative;
     width: 100%;
-    max-width: 1000px;
     margin: 0 auto;
 }
 
 .searchArea {
     position: absolute;
-    top: 50px;
+    top: 150px;
     left: 50%;
     transform: translateX(-50%);
     width: 40%;

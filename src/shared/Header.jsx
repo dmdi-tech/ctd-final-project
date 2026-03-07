@@ -6,20 +6,11 @@ function Header() {
     const location = useLocation();
     const [title, setTitle] = useState("");
 
-    useEffect(() => {
-        if(location.pathname=="/"){
-            setTitle("Todo List");
-        } else if(location.pathname=="/about") {
-            setTitle("About");
-        } else {
-            setTitle("Not Found")
-        }
-    },[location]);
-
     return (
-        <div className={styles.container}>
-            <h1 className={styles.title}>{title}</h1>
-            <nav>
+        <div className={styles.header}>
+            <h2>Music Player</h2>
+            <div className={styles.navLinks}>
+                <nav>
                 <NavLink
                     to={"/"}
                     className={({ isActive })=>{
@@ -44,7 +35,21 @@ function Header() {
                 >
                     About
                 </NavLink>
-            </nav>
+
+                <NavLink
+                    to={"/likedlist"}
+                    className={({ isActive })=>{
+                        if(isActive==true){
+                            return styles.active;
+                        } else {
+                            return styles.inactive;
+                        }
+                    }}
+                >
+                    Liked List
+                </NavLink>
+                </nav>
+            </div>
         </div>
     )
 }

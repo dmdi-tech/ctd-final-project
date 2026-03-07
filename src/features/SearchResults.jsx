@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import styles from './SearchResults.module.css'
-import PlaySong from './PlaySong';
+import PlaySong from '../shared/PlaySong';
 import { useState, useEffect } from 'react';
 
 
@@ -24,7 +24,6 @@ const StyledResults = styled.div`
 `;
 
 function SearchResults({ results, onPlay, onLike, isLoading }) {
-
 
     if(isLoading) {
         return <p>Loading...</p>
