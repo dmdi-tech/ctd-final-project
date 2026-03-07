@@ -9,25 +9,39 @@ import SearchResults from './features/SearchResults';
 import LikedList from './features/LikedList';
 import Header from './shared/Header';
 import About from './pages/About';
-
+import likedListLocalStorage from './utils/LikedListLocalStorage';
 
 function App() {
   const [queryString, setQueryString] = useState('');
   const [songsResults, setSongsResults] = useState([]);
-  const [likedList, setLikedList] = useState([]);
+  const [likedList, setLikedList] = useState(() => likedListLocalStorage.getList());
   const [currentSong, setCurrentSong] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
   const addSong = (song) => {
-    setLikedList([...likedList, song]);
+    setLikedList(prev => [...prev, song]);
   };
 
   const handlePlaySong = (song) => {
     setCurrentSong(song);
   };
 
+  const handleFavoriteSong = (song) => {
+    setLikedList(prev => {
+
+    })
+  }
+
+  const handleRemoveSong = (song) => {
+    
+  }
+
+  useEffect(() => {
+    if(!Array.isArray(likedList)) return;
+    likedListLocalStorage.saveList(likedList);
+  }, [likedList]);
 
   useEffect(() => {
     const loadSongs = async () => {
@@ -70,10 +84,6 @@ function App() {
                 onLike={addSong}
                 onPlay={handlePlaySong}
               />  
-            
-              <Player 
-                currentSong={currentSong}
-              /> 
             </div>
           }
         />
@@ -91,6 +101,10 @@ function App() {
           />}
         />
       </Routes>
+
+      <Player 
+        currentSong={currentSong}
+      /> 
 
       {errorMessage && (
         <div>

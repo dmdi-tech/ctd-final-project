@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import styles from './SearchResults.module.css'
 import { useState, useEffect } from 'react';
 import PlaySong from '../shared/PlaySong';
-
+import LikedSong from '../shared/LikedSong';
 
 const StyledContainer = styled.div` 
     display: flex;
@@ -38,9 +38,12 @@ function LikedList({ likedList, onPlay, isLoading }) {
                         song={song} 
                         onPlay={onPlay}
                     />
+                    <LikedSong />
+
                 </div>
                 
             ))}
+
         </StyledContainer>
     )
 }
