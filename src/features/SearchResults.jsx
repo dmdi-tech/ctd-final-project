@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import styles from './SearchResults.module.css'
 import PlaySong from '../shared/PlaySong';
 import { useState, useEffect } from 'react';
-
+import likedListLocalStorage from '../utils/LikedListLocalStorage';
+import { fetchSongs } from '../api/itunes';
+import SearchBar from '../shared/SearchBar';
 
 const StyledContainer = styled.div` 
     display: flex;
@@ -23,15 +25,62 @@ const StyledResults = styled.div`
 
 `;
 
-function SearchResults({ results, onPlay, onLike, isLoading }) {
+function SearchResults({ onPlay }) {
+    const [queryString, setQueryString] = useState('');
+    const [likedList, setLikedList] = useState(() => likedListLocalStorage.getList());
+    /* const [currentSong, setCurrentSong] = useState(null); */
+    const [songsResults, setSongsResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const addSong = (song) => {
+        setLikedList(prev => [...prev, song]);
+    };
+
+    const handlePlaySong = (song) => {
+        setCurrentSong(song);
+    };
+
+    const onLike = (song) => {
+        setLikedList(prev => [...prev, song]);
+        likedListLocalStorage.saveList([...likedList, song]);
+    };
+
+    useEffect(() => {
+        const loadSongs = async () => {
+          setIsLoading(true);
+    
+          if (!queryString.trim()) {
+            setSongsResults([]);
+            setIsLoading(false);
+            return;
+          }; 
+    
+          try {
+            const results = await fetchSongs(queryString);
+            setSongsResults(results);
+          } catch (error) {
+            console.error("Error");
+          } finally {
+            setIsLoading(false);
+          }
+        }
+        loadSongs();
+      }, [queryString]);
+
+    
 
     if(isLoading) {
         return <p>Loading...</p>
     }
 
+
     return (
         <StyledContainer>
-            {results.map((song) => (
+            <SearchBar 
+                queryString={queryString}
+                setQueryString={setQueryString}
+              />
+            {songsResults.map((song) => (
             <StyledDiv key={song.trackId}>
                 <img 
                     src={song.artworkUrl100}

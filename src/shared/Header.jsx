@@ -37,6 +37,19 @@ function Header() {
                 </NavLink>
 
                 <NavLink
+                    to={"/search"}
+                    className={({ isActive })=>{
+                        if(isActive==true){
+                            return styles.active;
+                        } else {
+                            return styles.inactive;
+                        }
+                    }}
+                >
+                    Search
+                </NavLink>
+
+                <NavLink
                     to={"/likedlist"}
                     className={({ isActive })=>{
                         if(isActive==true){

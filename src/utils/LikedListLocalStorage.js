@@ -1,9 +1,6 @@
-
-
 function getList() {
     try {
         console.log("got list from storage");
-
         return JSON.parse(localStorage.getItem('likedList')) || [];
     } catch(e) {
         console.error('likedListLocalStorage: error fetching liked list.')
@@ -22,7 +19,7 @@ function saveList(list) {
     }
 };
 
-function addSong(item) {
+function addSongToFavorites(item) {
     const songId = item.trackId ?? item.id;
     const list = getList().filter(favSong => favSong.id !== songId);
     saveList([
@@ -35,4 +32,4 @@ function removeSong(songId) {
     saveList(getList().filter((favSong => favSong.id !== songId)));
 };
 
-export default { getList, saveList, addSong, removeSong };
+export default { getList, saveList, addSongToFavorites, removeSong };
