@@ -15,58 +15,6 @@ import likedListLocalStorage from './utils/LikedListLocalStorage';
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
 
-  /* const [queryString, setQueryString] = useState('');
-  const [songsResults, setSongsResults] = useState([]);
-  const [likedList, setLikedList] = useState(() => likedListLocalStorage.getList());
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isSaving, setIsSaving] = useState(false); */
-
-  /* const addSong = (song) => {
-    setLikedList(prev => [...prev, song]);
-  };
-
-  const handlePlaySong = (song) => {
-    setCurrentSong(song);
-  };
-
-  const handleFavoriteSong = (song) => {
-    setLikedList(prev => {
-      
-    })
-  }
-
-  const handleRemoveSong = (song) => {
-
-  }
-
-  useEffect(() => {
-    if(!Array.isArray(likedList)) return;
-    likedListLocalStorage.saveList(likedList);
-  }, [likedList]);
-
-  useEffect(() => {
-    const loadSongs = async () => {
-      setIsLoading(true);
-
-      if (!queryString.trim()) {
-        setSongsResults([]);
-        setIsLoading(false);
-        return;
-      }; 
-
-      try {
-        const results = await fetchSongs(queryString);
-        setSongsResults(results);
-      } catch (error) {
-        console.error("Error");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    loadSongs();
-  }, [queryString]); */
-
   return (
     <div className={styles.container}>
       <Header />

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import styles from './SearchResults.module.css'
+import styles from './LikedList.module.css'
 import { useState, useEffect } from 'react';
 import PlaySong from '../shared/PlaySong';
 import LikedSong from '../shared/LikedSong';
@@ -9,6 +9,7 @@ const StyledContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: center;
 `;
 
 
@@ -84,16 +85,17 @@ function LikedList({ }) {
                 />
                     <p>{song.artistName} - {song.trackName}</p>
                     
-                    <PlaySong 
-                        song={song} 
-                        onPlay={handlePlaySong}
-                    />
-                    <LikedSong 
-                        song={song}
-                        onFavorite={handleFavoriteSong}
-                        onRemove={handleRemoveSong}
-                    />
-
+                    <div className={styles.buttons}>
+                        <PlaySong 
+                            song={song} 
+                            onPlay={handlePlaySong}
+                        />
+                        <LikedSong 
+                            song={song}
+                            onFavorite={handleFavoriteSong}
+                            onRemove={handleRemoveSong}
+                        />
+                    </div>
                 </div>
                 
             ))}

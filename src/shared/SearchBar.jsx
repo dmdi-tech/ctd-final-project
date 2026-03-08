@@ -23,7 +23,7 @@ const preventDefault = (event) => {
     event.preventDefault();
 };
 
-function SearchBar({ queryString, setQueryString }){
+function SearchBar({ queryString, setQueryString, onFocus }){
     const [localQueryString, setLocalQueryString] = useState(queryString);
 
     useEffect(() => {
@@ -41,6 +41,7 @@ function SearchBar({ queryString, setQueryString }){
                     onChange={(event) => {
                         setLocalQueryString(event.target.value);
                     }}
+                    onFocus={onFocus}
                 />  
             </StyledLabel>
 

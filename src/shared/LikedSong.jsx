@@ -1,7 +1,8 @@
-function LikedSong({ song, onFavorite, onRemove }) {
+import style from '../shared/LikedSong.module.css';
 
+function LikedSong({ song, onFavorite, onRemove }) {
     return (
-        <div>
+        <div className={style.button}>
             <button 
                 onClick={() => onFavorite(song)}
             >
