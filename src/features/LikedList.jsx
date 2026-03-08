@@ -12,6 +12,21 @@ const StyledContainer = styled.div`
     align-items: center;
 `;
 
+const StyledCards = styled.div`
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    grid-gap: 1rem;
+    padding: 20px;
+`;
+
+const StyledSongCards = styled.div`
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+`;
+
 
 function LikedList({ }) {
     const [likedList, setLikedList] = useState(() => likedListLocalStorage.getList());
@@ -74,31 +89,34 @@ function LikedList({ }) {
 
     return (
         <StyledContainer>
-            <h3>Liked List:</h3>      
-            {likedList.map((song) => (
-                <div key={song.trackId}>
-                    <img 
-                    src={song.artworkUrl100}
-                    alt={`${song.trackName}`}
-                    width={50}
-                    height={50}
-                />
-                    <p>{song.artistName} - {song.trackName}</p>
-                    
-                    <div className={styles.buttons}>
-                        <PlaySong 
-                            song={song} 
-                            onPlay={handlePlaySong}
-                        />
-                        <LikedSong 
-                            song={song}
-                            onFavorite={handleFavoriteSong}
-                            onRemove={handleRemoveSong}
-                        />
-                    </div>
-                </div>
-                
-            ))}
+            <h3 className={styles.title}>Liked List:</h3>   
+                <StyledCards>
+                    {likedList.map((song) => (
+                        <StyledSongCards key={song.trackId}>
+                            <img 
+                                src={song.artworkUrl100}
+                                alt={`${song.trackName}`}
+                                width={50}
+                                height={50}
+                            />
+                            
+                            <p>{song.artistName} - {song.trackName}</p>
+                            
+                            <div className={styles.buttons}>
+                                <PlaySong 
+                                    song={song} 
+                                    onPlay={handlePlaySong}
+                                />
+                                <LikedSong 
+                                    song={song}
+                                    onFavorite={handleFavoriteSong}
+                                    onRemove={handleRemoveSong}
+                                />
+                            </div>
+                        </StyledSongCards>
+                        
+                    ))}
+                </StyledCards>
         </StyledContainer>
     )
 }
