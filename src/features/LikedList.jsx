@@ -28,46 +28,37 @@ const StyledSongCards = styled.div`
 `;
 
 
-function LikedList({ onPlay }) {
+function LikedList({ onPlay, setErrorMessage }) {
     const [likedList, setLikedList] = useState(() => likedListLocalStorage.getList());
     const [isLoading, setIsLoading] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
 
     const handleFavoriteSong = (song) => {
-        setLikedList(prev => {
-            const songId = song.trackId ?? song.id;
+        try{
+            setLikedList(prev => {
+                const songId = song.trackId ?? song.id;
 
-            const filtered = prev.filter(s => s.trackId !== songId);
+                const updatedFav = prev.map(s =>
+                    (s.trackId ?? s.id) === songId
+                        ? {...s, isFavorite: !song.isFavorite}
+                        : s
+                );
 
-            const updatedFav = prev.map(s =>
-                (s.trackId ?? s.id) === songId
-                    ? {...s, isFavorite: !song.isFavorite}
-                    : s
-            );
-
-            likedListLocalStorage.saveList(updatedFav);
-            return updatedFav;
-        });
+                likedListLocalStorage.saveList(updatedFav);
+                return updatedFav;
+            });
+        } catch(error) {
+            setErrorMessage(error.message);
+        }
     };
 
     const handleRemoveSong = (song) => {
-        setLikedList(prev => prev.filter(s => s.trackId !== song.trackId));
-        likedListLocalStorage.removeSong(song.trackId);
-    };
-
-    useEffect(() => {
-        setIsLoading(true);
         try {
-            if(Array.isArray(likedList)) {
-                likedListLocalStorage.saveList(likedList);
-            }
-        } catch(errorMessage) {
-            setErrorMessage("Failed to save song to liked list.");
-        } finally {
-            setIsLoading(false);
+            setLikedList(prev => prev.filter(s => s.trackId !== song.trackId));
+            likedListLocalStorage.removeSong(song.trackId);
+        } catch(error) {
+            setErrorMessage(error.message);
         }
-
-    }, [likedList]);
+    };
 
     if(isLoading) {
         return <p>Liked List is loading...</p>
@@ -80,33 +71,34 @@ function LikedList({ onPlay }) {
     return (
         <StyledContainer>
             <h3 className={styles.title}>Liked List:</h3>   
-                <StyledCards>
-                    {likedList.map((song) => (
-                        <StyledSongCards key={song.trackId}>
-                            <img 
-                                src={song.artworkUrl100}
-                                alt={`${song.trackName}`}
-                                width={50}
-                                height={50}
-                            />
+            
+            <StyledCards>
+                {likedList.map((song) => (
+                    <StyledSongCards key={song.trackId}>
+                        <img 
+                            src={song.artworkUrl100}
+                            alt={`${song.trackName}`}
+                            width={50}
+                            height={50}
+                        />
 
-                            <p>{song.artistName} - {song.trackName}</p>
-                            
-                            <div className={styles.buttons}>
-                                <PlaySong 
-                                    song={song} 
-                                    onPlay={onPlay}
-                                />
-                                <LikedSong 
-                                    song={song}
-                                    onFavorite={handleFavoriteSong}
-                                    onRemove={handleRemoveSong}
-                                />
-                            </div>
-                        </StyledSongCards>
+                        <p>{song.artistName} - {song.trackName}</p>
                         
-                    ))}
-                </StyledCards>
+                        <div className={styles.buttons}>
+                            <PlaySong 
+                                song={song} 
+                                onPlay={onPlay}
+                            />
+                            <LikedSong 
+                                song={song}
+                                onFavorite={handleFavoriteSong}
+                                onRemove={handleRemoveSong}
+                            />
+                        </div>
+                    </StyledSongCards>
+                    
+                ))}
+            </StyledCards>
         </StyledContainer>
     )
 }

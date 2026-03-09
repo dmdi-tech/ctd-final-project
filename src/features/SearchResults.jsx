@@ -49,7 +49,7 @@ const StyledPopUp = styled.div`
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 `;
 
-function SearchResults({ onPlay }) {
+function SearchResults({ onPlay, setErrorMessage }) {
     const [queryString, setQueryString] = useState('');
     const [likedList, setLikedList] = useState(() => likedListLocalStorage.getList());
     const [songsResults, setSongsResults] = useState([]);
@@ -95,7 +95,7 @@ function SearchResults({ onPlay }) {
             const results = await fetchSongs(queryString);
             setSongsResults(results);
           } catch (error) {
-            console.error("Error");
+            setErrorMessage(error.message);
           } finally {
             setIsLoading(false);
           }

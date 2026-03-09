@@ -56,36 +56,40 @@ const PlayingSong = styled.p`
 `;
 
 
-function Player({ currentSong }) {
+function Player({ currentSong, setErrorMessage }) {
     const audioRef = useRef(null);
 
     useEffect(() => {
-        if(currentSong && audioRef.current) {
-            audioRef.current.src = currentSong.previewUrl;
-            audioRef.current.play();
+        try {
+            if(currentSong && audioRef.current) {
+                audioRef.current.src = currentSong.previewUrl;
+                audioRef.current.play();
+            }
+        } catch (error) {
+            setErrorMessage(error.message);
         }
     }, [currentSong]);
 
     return (
         <div className={styles.player}>
-        <PlayerWrapper>
-            <MediaPlayer src={mediaPlayer} alt="Media Player"/>
-            
-            <ScreenOverlay>
-                <p>MP3</p>
-                {currentSong ? (
-                    <> 
-                        <PlayingSong>
-                            {currentSong.trackName}
-                        </PlayingSong>
-                    </>
-                ) : (
-                    <p>No song playing...</p>
-                )}
-                <audio ref={audioRef} />
+            <PlayerWrapper>
+                <MediaPlayer src={mediaPlayer} alt="Media Player"/>
+                
+                <ScreenOverlay>
+                    <p>MP3</p>
+                    {currentSong ? (
+                        <> 
+                            <PlayingSong>
+                                {currentSong.trackName}
+                            </PlayingSong>
+                        </>
+                    ) : (
+                        <p>No song playing...</p>
+                    )}
+                    <audio ref={audioRef} />
 
-            </ScreenOverlay>
-        </PlayerWrapper>
+                </ScreenOverlay>
+            </PlayerWrapper>
         </div>
     )
 }

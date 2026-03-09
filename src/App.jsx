@@ -1,19 +1,18 @@
-import { use, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Routes, Route } from 'react-router';
 import './App.css'
 import styles from './App.module.css';
 import Player from './shared/Player'
-import SearchBar from './shared/SearchBar';
-import { fetchSongs } from './api/itunes';
 import SearchResults from './features/SearchResults';
 import LikedList from './features/LikedList';
 import Header from './shared/Header';
 import About from './pages/About';
+import Home from './pages/Home';
 import NotFound from './pages/NotFound';
-import likedListLocalStorage from './utils/LikedListLocalStorage';
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   return (
     <div className={styles.container}>
@@ -22,15 +21,17 @@ function App() {
           <Route 
             path='/' 
             element={
-              <>
-              </>
+              <Home />
             }  
           />
 
           <Route 
             path='/search'
             element={
-              <SearchResults onPlay={setCurrentSong} />  
+              <SearchResults 
+                onPlay={setCurrentSong} 
+                setErrorMessage={setErrorMessage}
+              />  
             }
           />
 
@@ -41,7 +42,10 @@ function App() {
 
           <Route 
             path='/likedlist'
-            element={<LikedList onPlay={setCurrentSong}/>}
+            element={<LikedList 
+              onPlay={setCurrentSong}
+              setErrorMessage={setErrorMessage}
+            />}
           />
 
           <Route 
@@ -50,15 +54,18 @@ function App() {
           />
       </Routes>
 
-      <Player currentSong={currentSong} /> 
+      <Player 
+        currentSong={currentSong} 
+        setErrorMessage={setErrorMessage}
+      /> 
       
-      {/* {errorMessage && (
+      {errorMessage && (
         <div>
           <hr />
           <p>{errorMessage}</p>
           <button onClick={() => setErrorMessage("")}>Dismiss</button>
         </div>
-      )} */}
+      )}
     </div>
   )
 }
