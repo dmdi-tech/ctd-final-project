@@ -41,7 +41,7 @@ function App() {
 
           <Route 
             path='/likedlist'
-            element={<LikedList />}
+            element={<LikedList onPlay={setCurrentSong}/>}
           />
 
           <Route 

@@ -52,11 +52,11 @@ const StyledPopUp = styled.div`
 function SearchResults({ onPlay }) {
     const [queryString, setQueryString] = useState('');
     const [likedList, setLikedList] = useState(() => likedListLocalStorage.getList());
-    /* const [currentSong, setCurrentSong] = useState(null); */
     const [songsResults, setSongsResults] = useState([]);
     const [showResults, setShowResults] = useState(false);
-    const resultsRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [likedSongs, setLikedSongs] = useState({});
+    const resultsRef = useRef(null);
 
     const addSong = (song) => {
         setLikedList(prev => [...prev, song]);
@@ -67,8 +67,17 @@ function SearchResults({ onPlay }) {
     };
 
     const onLike = (song) => {
+        if(likedList.some(s => s.trackId === song.trackId)) {
+            return "Already in liked list."
+        }
+
         setLikedList(prev => [...prev, song]);
         likedListLocalStorage.saveList([...likedList, song]);
+
+        setLikedSongs(prev => ({...prev, [song.trackId]: true }));
+        setTimeout(() => {
+            setLikedSongs(prev => ({...prev, [song.trackId]: false }));
+        }, 1000);
     };
 
     useEffect(() => {
@@ -134,10 +143,13 @@ function SearchResults({ onPlay }) {
                                     <div className={styles.buttons}>
                                         <button
                                             onClick={() => {
-                                                onLike(song)
+                                                onLike(song);
                                             }}
+                                            disabled={likedList.some(s => s.trackId === song.trackId)}
                                         >
-                                        Add to Likes
+                                        {likedSongs[song.trackId] ? "Added!" : 
+                                            likedList.some(s => s.trackId === song.trackId) ? "Already liked" : 
+                                            "Add to Likes"}
                                         </button>
 
                                         <PlaySong 

@@ -28,21 +28,10 @@ const StyledSongCards = styled.div`
 `;
 
 
-function LikedList({ }) {
+function LikedList({ onPlay }) {
     const [likedList, setLikedList] = useState(() => likedListLocalStorage.getList());
-    const [currentSong, setCurrentSong] = useState(null);
-
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [isSaving, setIsSaving] = useState(false);
-
-    const addSong = (song) => {
-        setLikedList(prev => [...prev, song]);
-    };
-
-    const handlePlaySong = (song) => {
-        setCurrentSong(song);
-    };
 
     const handleFavoriteSong = (song) => {
         setLikedList(prev => {
@@ -50,10 +39,11 @@ function LikedList({ }) {
 
             const filtered = prev.filter(s => s.trackId !== songId);
 
-            const updatedFav = [
-                ...filtered,
-                {...song, isFavorite: !song.isFavorite}
-            ];
+            const updatedFav = prev.map(s =>
+                (s.trackId ?? s.id) === songId
+                    ? {...s, isFavorite: !song.isFavorite}
+                    : s
+            );
 
             likedListLocalStorage.saveList(updatedFav);
             return updatedFav;
@@ -68,7 +58,7 @@ function LikedList({ }) {
     useEffect(() => {
         setIsLoading(true);
         try {
-            if(!Array.isArray(likedList)) {
+            if(Array.isArray(likedList)) {
                 likedListLocalStorage.saveList(likedList);
             }
         } catch(errorMessage) {
@@ -99,13 +89,13 @@ function LikedList({ }) {
                                 width={50}
                                 height={50}
                             />
-                            
+
                             <p>{song.artistName} - {song.trackName}</p>
                             
                             <div className={styles.buttons}>
                                 <PlaySong 
                                     song={song} 
-                                    onPlay={handlePlaySong}
+                                    onPlay={onPlay}
                                 />
                                 <LikedSong 
                                     song={song}
