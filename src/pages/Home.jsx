@@ -31,6 +31,8 @@ function Home() {
                 A music player with a touch of old-fashioned radio charm.
                 Search songs, build your liked list and listen all day long!
             </Subtitle>
+
+            <Subtitle>Start by searching for any song, and add it to your liked list. Or play a song!</Subtitle>
         </StyledDiv>
     )
 }

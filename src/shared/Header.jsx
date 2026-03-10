@@ -8,7 +8,7 @@ function Header() {
 
     useEffect(() => {
         if(location.pathname=="/"){
-            setTitle("Music Player");
+            setTitle("Sol Radio");
         } else if(location.pathname=="/search") {
             setTitle("Search");    
         } else if(location.pathname=="/likedlist") {

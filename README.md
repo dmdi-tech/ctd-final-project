@@ -1,16 +1,43 @@
-# React + Vite
+# Sol Radio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About
 
-Currently, two official plugins are available:
+Inspired by old car stereos and Microsoft Media Player skins, Sol Radio has been a personal project I have been wanting to build.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+You can search for songs, add them to your liked list, and favorite them.
 
-## React Compiler
+## Dependencies
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React
+- Vite
+- React Router
+- Styled Components
+- iTunes API
 
-## Expanding the ESLint configuration
+## How to start
+1. Clone the repository
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```git bash
+    git clone https://github.com/dmdi-tech/ctd-final-project.git
+    cd ctd-final-project
+```
+
+2. Install dependences
+
+```git bash
+    npm install
+```
+
+3. Start the dev server
+
+```git bash
+    npm run dev
+```
+
+### Other considerations:
+
+No need to set up an env file. This app does not require any env variables.
+
+This application uses iTunes API, which is public and requires no authentication, but is limited to a limited number of requests.
+
+All data is stored via LocalStorage, no need for database set up.
