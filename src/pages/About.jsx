@@ -1,8 +1,17 @@
+import styled from 'styled-components';
+
+const StyledDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
 function About() {
     return (
-        <div>
+        <StyledDiv>
             <p>Hi There! Welcome to my Code the Dream Final Project for the React Course!</p>
-        </div>
+        </StyledDiv>
     )
 }
 

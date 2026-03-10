@@ -6,9 +6,23 @@ function Header() {
     const location = useLocation();
     const [title, setTitle] = useState("");
 
+    useEffect(() => {
+        if(location.pathname=="/"){
+            setTitle("Music Player");
+        } else if(location.pathname=="/about") {
+            setTitle("About");
+        } else if(location.pathname=="/search") {
+            setTitle("Search");    
+        } else if(location.pathname=="/likedlist") {
+            setTitle("Liked List");
+        } else {
+            setTitle("Not Found")
+        }
+    },[location]);
+
     return (
         <div className={styles.header}>
-            <h2>Music Player</h2>
+            <h2>{title}</h2>
             <div className={styles.navLinks}>
                 <nav>
                     <NavLink

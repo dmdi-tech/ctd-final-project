@@ -38,7 +38,7 @@ const StyledResults = styled.div`
 const StyledPopUp = styled.div`
     width: 100%;
     position: absolute;
-    top: 30px;
+    top: 40px;
     max-height: 400px;
     overflow-y: auto;
     background: white;
@@ -58,17 +58,9 @@ function SearchResults({ onPlay, setErrorMessage }) {
     const [likedSongs, setLikedSongs] = useState({});
     const resultsRef = useRef(null);
 
-    const addSong = (song) => {
-        setLikedList(prev => [...prev, song]);
-    };
-
-    const handlePlaySong = (song) => {
-        setCurrentSong(song);
-    };
-
     const onLike = (song) => {
-        setLikedList(prev => [...prev, song]);
-        likedListLocalStorage.saveList([...likedList, song]);
+        likedListLocalStorage.addSong(song);
+        setLikedList(likedListLocalStorage.getList());
 
         setLikedSongs(prev => ({...prev, [song.trackId]: true }));
         setTimeout(() => {

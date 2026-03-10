@@ -39,8 +39,8 @@ function addSongToFavorites(song) {
     ]);
 };
 
-function getFavorites(){
-    return getList().filter(s => s.isFavorite);
+function getFavorites(sortField, sortDirection){
+    return getSortedList(sortField, sortDirection).filter(s => s.isFavorite);
 }
 
 function removeSong(songId) {

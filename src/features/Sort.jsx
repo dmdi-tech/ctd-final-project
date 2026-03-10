@@ -1,7 +1,9 @@
+import styles from '../features/Sort.module.css';
+
 function Sort({ sortDirection, setSortDirection, sortField, setSortField, filter, setFilter }) {
     return (
         <>
-            <div>
+            <div className={styles.sortOptions}>
                 <label>Filter By
                     <select 
                         id="filterBy"

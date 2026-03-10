@@ -45,7 +45,7 @@ function LikedList({ onPlay, setErrorMessage }) {
     const [filter, setFilter] = useState("all");
 
     const sortedLikedList = useMemo(() => {
-        if (filter === 'favorites') return likedListLocalStorage.getFavorites();
+        if (filter === 'favorites') return likedListLocalStorage.getFavorites(sortField, sortDirection);
         return likedListLocalStorage.getSortedList(sortField, sortDirection);
     }, [likedList, sortField, sortDirection, filter]);
 
@@ -111,9 +111,7 @@ function LikedList({ onPlay, setErrorMessage }) {
     }
 
     return (
-        <StyledContainer>
-            <h3 className={styles.title}>Liked List:</h3>   
-            
+        <StyledContainer>            
             <StyledCards>
                 {currentLikedList.map((song) => (
                     <StyledSongCards key={song.trackId}>
