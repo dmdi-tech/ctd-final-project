@@ -1,4 +1,4 @@
-import styles from '../features/Sort.module.css';
+import styles from '../shared/Sort.module.css';
 
 function Sort({ sortDirection, setSortDirection, sortField, setSortField, filter, setFilter }) {
     return (

@@ -9,8 +9,6 @@ function Header() {
     useEffect(() => {
         if(location.pathname=="/"){
             setTitle("Music Player");
-        } else if(location.pathname=="/about") {
-            setTitle("About");
         } else if(location.pathname=="/search") {
             setTitle("Search");    
         } else if(location.pathname=="/likedlist") {
@@ -36,19 +34,6 @@ function Header() {
                         }}
                     >
                         Home
-                    </NavLink>
-                    
-                    <NavLink
-                        to={"/about"}
-                        className={({ isActive })=>{
-                            if(isActive==true){
-                                return styles.active;
-                            } else {
-                                return styles.inactive;
-                            }
-                        }}
-                    >
-                        About
                     </NavLink>
 
                     <NavLink

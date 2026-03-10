@@ -7,6 +7,7 @@ const PlayerWrapper = styled.div`
     position: relative;
     width:100%;
     margin: 0 auto;
+    top: calc(100% - 4px);
 `;
 
 const MediaPlayer = styled.img`

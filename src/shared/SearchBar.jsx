@@ -54,6 +54,18 @@ const preventDefault = (event) => {
 
 function SearchBar({ queryString, setQueryString, onFocus }){
     const [localQueryString, setLocalQueryString] = useState(queryString);
+    const [error, setError] = useState('');
+
+    const handleChange = (event) => {
+        const value = event.target.value;
+
+        if(value.length > 30) {
+            setError('Search query too long.');
+        } else {
+            setError('');
+            setLocalQueryString(value);
+        }
+    };
 
     useEffect(() => {
         const debounce = setTimeout(() => setQueryString(localQueryString), 500);
@@ -62,14 +74,12 @@ function SearchBar({ queryString, setQueryString, onFocus }){
 
     return(
         <StyledForm onSubmit={preventDefault}>
-            <StyledLabel id="searchTodos">Search songs: 
+            <StyledLabel id="searchSongs">Search songs: 
                 <input
                     id="searchSongs"
                     type="text"
                     value={localQueryString}
-                    onChange={(event) => {
-                        setLocalQueryString(event.target.value);
-                    }}
+                    onChange={handleChange}
                     onFocus={onFocus}
                 />  
             </StyledLabel>
@@ -80,7 +90,14 @@ function SearchBar({ queryString, setQueryString, onFocus }){
             >
                 Clear
             </StyledButton>
-        </StyledForm>
+            {error && (
+                <div>
+                    <hr />
+                    <p>{error}</p>
+                    <button onClick={() => setErrorMessage("")}>Dismiss</button>
+                </div>
+            )}
+        </StyledForm> 
     )
 }
 

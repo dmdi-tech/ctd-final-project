@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import styles from './LikedList.module.css'
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import PlaySong from '../shared/PlaySong';
 import LikedSong from '../shared/LikedSong';
 import likedListLocalStorage from '../utils/LikedListLocalStorage';
 import { useSearchParams, useNavigate } from 'react-router';
-import Sort from './Sort';
+import Sort from '../shared/Sort';
+import Card from '../shared/SongCard';
 
 const StyledContainer = styled.div` 
     display: flex;
@@ -20,16 +21,6 @@ const StyledCards = styled.div`
     grid-auto-rows: auto;
     grid-gap: 1rem;
     padding: 20px;
-`;
-
-const StyledSongCards = styled.div`
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 `;
 
 
@@ -58,7 +49,7 @@ function LikedList({ onPlay, setErrorMessage }) {
     const totalPages = Math.ceil(sortedLikedList.length / itemsPerPage);
     const currentLikedList = sortedLikedList.slice(indexOfFirstLiked, indexOfLastLiked);
 
-    const handleFavoriteSong = (song) => {
+    const handleFavoriteSong = useCallback((song) => {
         try{
             setLikedList(prev => {
                 const songId = song.trackId ?? song.id;
@@ -75,16 +66,16 @@ function LikedList({ onPlay, setErrorMessage }) {
         } catch(error) {
             setErrorMessage(error.message);
         }
-    };
+    }, [setErrorMessage]);
 
-    const handleRemoveSong = (song) => {
+    const handleRemoveSong = useCallback((song) => {
         try {
             setLikedList(prev => prev.filter(s => s.trackId !== song.trackId));
             likedListLocalStorage.removeSong(song.trackId);
         } catch(error) {
             setErrorMessage(error.message);
         }
-    };
+    }, [setErrorMessage]);
 
     const handlePreviousPage = () => {
         setSearchParams({page: Math.max(1, currentPage - 1)});
@@ -114,7 +105,7 @@ function LikedList({ onPlay, setErrorMessage }) {
         <StyledContainer>            
             <StyledCards>
                 {currentLikedList.map((song) => (
-                    <StyledSongCards key={song.trackId}>
+                    <Card key={song.trackId}>
                         <img
                             className={styles.albumCover}
                             src={song.artworkUrl100}
@@ -136,7 +127,7 @@ function LikedList({ onPlay, setErrorMessage }) {
                                 onRemove={handleRemoveSong}
                             />
                         </div>
-                    </StyledSongCards>
+                    </Card>
                     
                 ))}
             </StyledCards>

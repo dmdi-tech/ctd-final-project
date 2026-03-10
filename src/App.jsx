@@ -3,10 +3,9 @@ import { Routes, Route } from 'react-router';
 import './App.css'
 import styles from './App.module.css';
 import Player from './shared/Player'
-import SearchResults from './features/SearchResults';
-import LikedList from './features/LikedList';
+import SearchResults from './pages/SearchResults';
+import LikedList from './pages/LikedList';
 import Header from './shared/Header';
-import About from './pages/About';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 
@@ -33,11 +32,6 @@ function App() {
                 setErrorMessage={setErrorMessage}
               />  
             }
-          />
-
-          <Route 
-            path='/about'
-            element={<About />}
           />
 
           <Route 
