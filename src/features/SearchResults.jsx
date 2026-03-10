@@ -11,22 +11,21 @@ const StyledContainer = styled.div`
     flex-direction: column;
     gap: 10px;
     padding: 10px;  
-    
 `;
 
 const StyledDiv = styled.div`
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 8px;
-    border-radius: 6px;  
-    padding: 12px;
+    gap: 12px;
+    padding: 10px 12px;
+    &:hover {
+        background: #f9f9f9;
+    }
 `;
 
 const SearchWrapper = styled.div`
     position: relative;
     width: 100%;
-    
 `;
 
 const StyledResults = styled.div`
@@ -38,15 +37,15 @@ const StyledResults = styled.div`
 const StyledPopUp = styled.div`
     width: 100%;
     position: absolute;
-    top: 40px;
+    top: calc(100% + 4px);
+    left: 0;
     max-height: 400px;
     overflow-y: auto;
     background: white;
-    border: 1px solid #ccc;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    
     z-index: 999;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
 `;
 
 function SearchResults({ onPlay, setErrorMessage }) {
@@ -74,7 +73,7 @@ function SearchResults({ onPlay, setErrorMessage }) {
     
           if (!queryString.trim()) {
             setSongsResults([]);
-            setShowResults(true);
+            setShowResults(false);
             setIsLoading(false);
             return;
           }; 
@@ -82,6 +81,7 @@ function SearchResults({ onPlay, setErrorMessage }) {
           try {
             const results = await fetchSongs(queryString);
             setSongsResults(results);
+            setShowResults(true);
           } catch (error) {
             setErrorMessage(error.message);
           } finally {
