@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import styles from './LikedList.module.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import PlaySong from '../shared/PlaySong';
 import LikedSong from '../shared/LikedSong';
 import likedListLocalStorage from '../utils/LikedListLocalStorage';
+import { useSearchParams, useNavigate } from 'react-router';
+import Sort from './Sort';
 
 const StyledContainer = styled.div` 
     display: flex;
@@ -25,12 +27,36 @@ const StyledSongCards = styled.div`
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 `;
 
 
 function LikedList({ onPlay, setErrorMessage }) {
     const [likedList, setLikedList] = useState(() => likedListLocalStorage.getList());
     const [isLoading, setIsLoading] = useState(false);
+
+    const navigate = useNavigate();
+
+    const [sortField, setSortField] = useState("createdTime");
+    const [sortDirection, setSortDirection] = useState("desc");
+
+    const [filter, setFilter] = useState("all");
+
+    const sortedLikedList = useMemo(() => {
+        if (filter === 'favorites') return likedListLocalStorage.getFavorites();
+        return likedListLocalStorage.getSortedList(sortField, sortDirection);
+    }, [likedList, sortField, sortDirection, filter]);
+
+
+    const [searchParams, setSearchParams] = useSearchParams();
+    const itemsPerPage = 6;
+    const currentPage = parseInt(searchParams.get('page') || '1', 10);
+    const indexOfFirstLiked = (currentPage - 1) * itemsPerPage;
+    const indexOfLastLiked = indexOfFirstLiked + itemsPerPage;
+    const totalPages = Math.ceil(sortedLikedList.length / itemsPerPage);
+    const currentLikedList = sortedLikedList.slice(indexOfFirstLiked, indexOfLastLiked);
 
     const handleFavoriteSong = (song) => {
         try{
@@ -60,6 +86,22 @@ function LikedList({ onPlay, setErrorMessage }) {
         }
     };
 
+    const handlePreviousPage = () => {
+        setSearchParams({page: Math.max(1, currentPage - 1)});
+    }
+
+    const handleNextPage = () => {
+        setSearchParams({ page: Math.min(totalPages, currentPage + 1)})
+    }
+
+    useEffect(() => {
+        if(totalPages > 0){
+            if(isNaN(currentPage) || currentPage < 1 || currentPage > totalPages) {
+                navigate("/likedlist");
+            }
+        }
+    },[currentPage, totalPages, navigate]);
+
     if(isLoading) {
         return <p>Liked List is loading...</p>
     }
@@ -73,9 +115,10 @@ function LikedList({ onPlay, setErrorMessage }) {
             <h3 className={styles.title}>Liked List:</h3>   
             
             <StyledCards>
-                {likedList.map((song) => (
+                {currentLikedList.map((song) => (
                     <StyledSongCards key={song.trackId}>
-                        <img 
+                        <img
+                            className={styles.albumCover}
                             src={song.artworkUrl100}
                             alt={`${song.trackName}`}
                             width={50}
@@ -99,6 +142,33 @@ function LikedList({ onPlay, setErrorMessage }) {
                     
                 ))}
             </StyledCards>
+            <div className={styles.paginationControls}>
+                <button
+
+                    onClick={() =>{
+                        handlePreviousPage();
+                    }}
+                    disabled={currentPage===1}
+                >Previous</button>
+
+                <span>Page {currentPage} of {totalPages} </span>
+                
+                <button
+                    onClick={() => {
+                        handleNextPage();
+                    }}
+                    disabled={currentPage===totalPages}
+                >Next</button>
+            </div> 
+
+            <Sort 
+                filter={filter}
+                setFilter={setFilter}
+                sortDirection={sortDirection}
+                setSortDirection={setSortDirection}
+                sortField={sortField}
+                setSortField={setSortField}
+            />
         </StyledContainer>
     )
 }

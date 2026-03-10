@@ -19,18 +19,45 @@ function saveList(list) {
     }
 };
 
-function addSongToFavorites(item) {
-    const songId = item.trackId ?? item.id;
+function addSong(song) {
+    const list = getList();
+    const alreadyLiked = list.some(s => (s.trackId ?? s.id) === (song.trackId ?? song.id));
+
+    if(alreadyLiked) return;
+
+    const songWithTime = {...song, createdTime: Date.now() };
+
+    saveList([...list, songWithTime]);
+};
+
+function addSongToFavorites(song) {
+    const songId = song.trackId ?? song.id;
     const list = getList().filter(favSong => (favSong.trackId ?? favSong.id) !== songId);
     saveList([
         ...list,
-        {...item, isFavorite: true},
+        {...song, isFavorite: true},
     ]);
 };
+
+function getFavorites(){
+    return getList().filter(s => s.isFavorite);
+}
 
 function removeSong(songId) {
     const list = (getList().filter((favSong => (favSong.trackId ?? favSong.id)!== songId)));
     saveList(list);
 };
 
-export default { getList, saveList, addSongToFavorites, removeSong };
+function getSortedList(sortField, sortDirection) {
+    const list = getList();
+    return [...list].sort((a, b) => {
+        let aVal = sortField === 'title' ? a.trackName?.toLowerCase() ?? '' : a.createdTime ?? 0;
+        let bVal = sortField === 'title' ? b.trackName?.toLowerCase() ?? '' : b.createdTime ?? 0;
+
+        if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+        if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
+        return 0;
+    });
+}
+
+export default { getList, saveList, addSong, addSongToFavorites, getFavorites, removeSong, getSortedList };

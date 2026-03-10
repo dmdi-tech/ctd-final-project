@@ -67,10 +67,6 @@ function SearchResults({ onPlay, setErrorMessage }) {
     };
 
     const onLike = (song) => {
-        if(likedList.some(s => s.trackId === song.trackId)) {
-            return "Already in liked list."
-        }
-
         setLikedList(prev => [...prev, song]);
         likedListLocalStorage.saveList([...likedList, song]);
 

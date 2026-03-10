@@ -7,3 +7,20 @@
 .title {
     font-size: 30px;
 }
+
+.paginationControls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+.albumCover {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
