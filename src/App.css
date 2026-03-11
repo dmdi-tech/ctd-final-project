@@ -1,5 +1,6 @@
 * { 
     font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    
 }
 
 body {
@@ -28,7 +29,8 @@ button {
     color: #484848;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    min-height: 100vh;
+    justify-content: flex-start;
     --dk-color:#423c38;
     --mid-color:#b4d4b8;
     --lt-color:#faf5f2;
